@@ -14,6 +14,7 @@ class StoryController {
           {
             model: Tag,
             attributes: ['tagName'],
+            where: {},
             through: {
               attributes: []
             },
@@ -26,7 +27,7 @@ class StoryController {
       
       if (tag) {
         opt.include[1].where = {
-          tagname: {
+          tagName: {
             [Op.iLike]: `%${tag}%`
           }
         }
