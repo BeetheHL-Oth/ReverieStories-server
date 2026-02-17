@@ -1,11 +1,17 @@
 const express = require('express')
 const router = express.Router()
 const authRouter = require('./users')
-const storyRouter = require('./stories')
+const storiesRouter = require('./stories')
 const myStoriesRouter = require('./mystories')
+const tagsRouter = require('./tags')
+const authentication = require('../middleware/authentication')
+const errorHandler = require('../middleware/errorHandler')
 
 router.use('/users', authRouter)
-router.use('/stories', storyRouter)
-router.use('/mystories', myStoriesRouter)
+router.use('/stories', storiesRouter)
+router.use('/mystories', authentication, myStoriesRouter)
+router.use('/tags', tagsRouter)
+
+router.use(errorHandler)
 
 module.exports = router

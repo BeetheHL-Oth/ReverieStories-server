@@ -14,8 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   StoryTag.init({
-    StoryId: DataTypes.INTEGER,
-    TagId: DataTypes.INTEGER
+    StoryId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE'
+    },
+    TagId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE'
+    }
   }, {
     sequelize,
     modelName: 'StoryTag',

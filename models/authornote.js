@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   AuthorNote.init({
     note: DataTypes.TEXT,
-    ChapterId: DataTypes.INTEGER
+    ChapterId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE'
+    }
   }, {
     sequelize,
     modelName: 'AuthorNote',

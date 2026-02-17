@@ -19,14 +19,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       votes: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       UserId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

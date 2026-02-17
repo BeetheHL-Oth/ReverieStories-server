@@ -1,20 +1,47 @@
+const { Op } = require('sequelize')
 const {Story, Tag, User, Chapter} = require('../models')
 
 class StoryController {
   static async listAll (req, res, next) {
     try {
-      let data = await Story.findAll({
-        include: [User, Tag, Chapter]
-      })
+      let {tag} = req.query
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10
+      const offset = (page - 1) * limit
+      let opt = {
+        include: [
+          User,
+          {
+            model: Tag,
+            attributes: ['tagName'],
+            through: {
+              attributes: []
+            },
+          },
+          Chapter],
+          limit,
+          offset,
+          distinct: true
+      }
+      
+      if (tag) {
+        opt.include[1].where = {
+          tagname: {
+            [Op.iLike]: `%${tag}%`
+          }
+        }
+      }
 
-      if (!data) {
+      let {count, rows} = await Story.findAndCountAll(opt)
+
+      if (!rows) {
         throw {
           name: 'notFound',
           message: 'Data not found'
         }
       }
 
-      data = data.map(e => {
+      let data = rows.map(e => {
         return {
           title: e.title,
           author: e.User.username,
@@ -25,8 +52,10 @@ class StoryController {
       })
 
       res.status(200).json({
-        message: 'Success read data',
-        data
+        message: 'Successfully fetched Stories',
+        count,
+        data,
+        page
       })
     }
     catch (error) {
@@ -37,7 +66,15 @@ class StoryController {
     try {
       const {storyId} = req.params
       let data = await Story.findByPk(storyId, {
-        include: [Tag, User, Chapter]
+        include: [
+          {
+            model: Tag,
+            attributes: ['tagName'],
+            through: {
+              attributes: []
+            },
+          },
+          User, Chapter]
       })
 
       if (!data) {
@@ -48,9 +85,7 @@ class StoryController {
       }
 
       const chapters = data.Chapters.map(e => {
-        return {
-          name: e.name
-        }
+        return e.name
       })
 
       data = {
@@ -63,11 +98,35 @@ class StoryController {
         }
 
       res.status(200).json({
-        message: 'Success get story',
+        message: 'Successfully fetched Story',
         data
       })
     }
     catch (error) {
+      next(error)
+    }
+  }
+  static async vote (req, res, next) {
+    try {
+      const {storyId} = req.params
+
+      let data = await Story.findByPk(storyId)
+
+      if (!data) {
+        throw {
+          name: 'notFound',
+          message: 'Story not found'
+        }
+      }
+
+      await data.increment('votes')
+
+      res.status(200).json({
+        message: `Vote added`
+      })
+    }
+    catch (error) {
+      console.log(error)
       next(error)
     }
   }

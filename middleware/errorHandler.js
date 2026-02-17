@@ -22,6 +22,14 @@ function errorHandler (error, req, res, next) {
       code = 400
       message = error.message
       break;
+    case 'unauthorized':
+      code = 401
+      message = error.message
+      break;
+    case 'forbidden':
+      code = 403
+      message = error.message
+      break;
     default:
       code = 500
       message = 'Internal Server Error'
