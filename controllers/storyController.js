@@ -4,7 +4,7 @@ const {Story, Tag, User, Chapter} = require('../models')
 class StoryController {
   static async listAll (req, res, next) {
     try {
-      let {tag} = req.query
+      let {tag, search} = req.query
       const page = parseInt(req.query.page) || 1;
       const limit = 10
       const offset = (page - 1) * limit
@@ -20,6 +20,7 @@ class StoryController {
             },
           },
           Chapter],
+          where: {},
           limit,
           offset,
           distinct: true
@@ -29,6 +30,14 @@ class StoryController {
         opt.include[1].where = {
           tagName: {
             [Op.iLike]: `%${tag}%`
+          }
+        }
+      }
+
+      if (search) {
+        opt.where = {
+          title: {
+            [Op.iLike]: `%${search}%`
           }
         }
       }
