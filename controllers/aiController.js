@@ -4,7 +4,8 @@ const { Chat, Message } = require('../models')
 class AIController {
   static async chatWithCharacter(req, res, next) {
     try {
-      const {characterDescription, message, chatId} = req.body
+      const {characterDescription, message} = req.body
+      const {chatId} = req.params
 
       if (!message) {
         throw {
