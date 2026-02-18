@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: { msg: 'Story Title is required' },
         notNull: { msg: 'Story Title is required' },
-        len: { args: [1, 30],
-          msg: 'Story title must be between 1 and 30 characters'
+        len: { args: [1, 100],
+          msg: 'Story title must be between 1 and 100 characters'
         }
       }
     },

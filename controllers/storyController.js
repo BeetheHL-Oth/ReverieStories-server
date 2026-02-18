@@ -18,6 +18,7 @@ class StoryController {
             through: {
               attributes: []
             },
+            required: false
           },
           Chapter],
           where: {},
@@ -44,7 +45,7 @@ class StoryController {
 
       let {count, rows} = await Story.findAndCountAll(opt)
 
-      if (!rows) {
+      if (!rows.length) {
         throw {
           name: 'notFound',
           message: 'Data not found'
