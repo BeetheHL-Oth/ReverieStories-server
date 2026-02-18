@@ -15,7 +15,8 @@ module.exports = {
           model: 'Stories',
           key: 'id'
         },
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       TagId: {
         type: Sequelize.INTEGER,
@@ -23,7 +24,8 @@ module.exports = {
           model: 'Tags',
           key: 'id'
         },
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

@@ -1,11 +1,13 @@
+const { Op } = require('sequelize')
 const {Story, Tag, Chapter, StoryTag} = require('../models')
 
 class MyStoryController {
   static async listAll (req, res, next) {
     try {
       const UserId = req.user.id
+      const {search} = req.params
 
-      const data = await Story.findAll({
+      let opt = {
         include: [
           {
             model: Tag,
@@ -18,7 +20,18 @@ class MyStoryController {
         where: {
           UserId
         }
-      })
+      }
+
+      if (search) {
+        opt.where = {
+          UserId,
+          title: {
+            [Op.iLike]: `%${search}%` 
+          }
+        }
+      }
+
+      const data = await Story.findAll()
 
       if (!data) {
         throw {

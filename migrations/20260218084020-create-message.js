@@ -2,20 +2,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('AuthorNotes', {
+    await queryInterface.createTable('Messages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      note: {
-        type: Sequelize.TEXT
+      role: {
+        type: Sequelize.STRING
       },
-      ChapterId: {
+      content: {
+        type: Sequelize.STRING
+      },
+      ChatId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Chapters',
+          model: 'Chats',
           key: 'id'
         },
         onDelete: 'CASCADE',
@@ -32,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('AuthorNotes');
+    await queryInterface.dropTable('Messages');
   }
 };

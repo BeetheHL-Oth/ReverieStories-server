@@ -36,7 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     UserId: {
       type: DataTypes.INTEGER,
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     }
   }, {
     sequelize,

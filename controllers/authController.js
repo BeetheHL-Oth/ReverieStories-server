@@ -1,6 +1,8 @@
+const { OAuth2Client } = require('google-auth-library');
 const { comparePassword } = require('../helper/bcrypt');
 const { signToken } = require('../helper/jwt');
 const {User} = require('../models')
+const OauthSetup = new OAuth2Client(process.env.GOOGLE_OAUTH_ID)
 class AuthController {
   static async register (req, res, next) {
     try {
@@ -61,6 +63,14 @@ class AuthController {
       res.status(200).json({
         access_token
       })
+    }
+    catch (error) {
+      next(error)
+    }
+  }
+  static async googleOAuth (req, res, next) {
+    try {
+      
     }
     catch (error) {
       next(error)

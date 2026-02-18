@@ -16,11 +16,13 @@ module.exports = (sequelize, DataTypes) => {
   StoryTag.init({
     StoryId: {
       type: DataTypes.INTEGER,
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     },
     TagId: {
       type: DataTypes.INTEGER,
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     }
   }, {
     sequelize,

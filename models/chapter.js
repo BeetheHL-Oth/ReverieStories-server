@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     chapterImageUrl: DataTypes.STRING,
     StoryId: {
       type: DataTypes.INTEGER,
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
     }
   }, {
     sequelize,
