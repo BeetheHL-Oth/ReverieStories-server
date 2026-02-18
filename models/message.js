@@ -15,10 +15,29 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Message.init({
-    role: DataTypes.STRING,
-    content: DataTypes.STRING,
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Role required' },
+        notNull: { msg: 'Role required' }
+      }
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Content required' },
+        notNull: { msg: 'Content required' }
+      }
+    },
     ChatId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'ChatId required' },
+        notNull: { msg: 'ChatId required' }
+      },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     }

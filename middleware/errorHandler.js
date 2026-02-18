@@ -30,6 +30,10 @@ function errorHandler (error, req, res, next) {
       code = 403
       message = error.message
       break;
+    case 'invalidPrompt':
+      code = 400
+      message = error.message
+      break;
     default:
       code = 500
       message = 'Internal Server Error'

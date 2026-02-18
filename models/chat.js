@@ -15,9 +15,21 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Chat.init({
-    characterDescription: DataTypes.TEXT,
+    characterDescription: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Character description required' },
+        notNull: { msg: 'Character description required' }
+      }
+    },
     UserId: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'UserId required' },
+        notNull: { msg: 'UserId required' }
+      },
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     }
