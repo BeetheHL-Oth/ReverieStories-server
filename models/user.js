@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'Client'
+      defaultValue: 'User'
     }
   }, {
     hooks: {
