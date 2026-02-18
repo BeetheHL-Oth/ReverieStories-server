@@ -124,6 +124,20 @@ class MyStoryController {
     try {
       const {storyId, tagId} = req.params
 
+      let check = await StoryTag.findOne({
+        where: {
+          StoryId: storyId,
+          TagId: tagId
+        }
+      })
+
+      if (check) {
+        throw {
+          name: 'alreadyAdded',
+          message: 'This story already has this tag'
+        }
+      }
+
       let data = await StoryTag.create({
         StoryId: storyId,
         TagId: tagId
