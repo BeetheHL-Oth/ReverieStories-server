@@ -10,7 +10,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       tagName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: { msg: 'Tag name has to be unique' }
       },
       createdAt: {
         allowNull: false,
