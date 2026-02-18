@@ -14,6 +14,11 @@
     "dialect": "postgres"
   },
   "production": {
+<<<<<<< HEAD
   "use_env_variable": "DATABASE_URL"
+=======
+   "use_env_variable": "DATABASE_URL"
+>>>>>>> cb1bf47 (deploy ready)
   }
+
 }
