@@ -112,7 +112,8 @@ class StoryController {
           Tags: data.Tags,
           description: data.description,
           chapters,
-          votes: data.votes
+          votes: data.votes,
+          storyImageUrl: data.storyImageUrl
         }
 
       res.status(200).json({
