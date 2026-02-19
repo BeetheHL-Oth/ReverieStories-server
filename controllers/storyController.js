@@ -24,7 +24,10 @@ class StoryController {
           where: {},
           limit,
           offset,
-          distinct: true
+          distinct: true,
+          order: [
+            ['votes', 'DESC']
+          ]
       }
       
       if (tag) {
