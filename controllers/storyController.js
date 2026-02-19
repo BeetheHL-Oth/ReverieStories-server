@@ -57,6 +57,7 @@ class StoryController {
 
       let data = rows.map(e => {
         return {
+          id: e.id,
           title: e.title,
           author: e.User.username,
           chapters: e.Chapters.length,
