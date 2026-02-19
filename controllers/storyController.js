@@ -6,14 +6,14 @@ class StoryController {
     try {
       let {tag, search} = req.query
       const page = parseInt(req.query.page) || 1;
-      const limit = 10
+      const limit = 5
       const offset = (page - 1) * limit
       let opt = {
         include: [
           User,
           {
             model: Tag,
-            attributes: ['tagName'],
+            attributes: ['id', 'tagName'],
             where: {},
             through: {
               attributes: []
