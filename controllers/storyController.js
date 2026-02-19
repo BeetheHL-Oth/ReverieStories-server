@@ -100,7 +100,10 @@ class StoryController {
       }
 
       const chapters = data.Chapters.map(e => {
-        return e.name
+        return {
+          id: e.id,
+          name: e.name
+        }
       })
 
       data = {
