@@ -11,7 +11,7 @@ class MyStoryController {
         include: [
           {
             model: Tag,
-            attributes: ['tagName'],
+            attributes: ['id','tagName'],
             through: {
               attributes: []
             },
