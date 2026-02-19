@@ -31,7 +31,7 @@ class MyStoryController {
         }
       }
 
-      const data = await Story.findAll()
+      const data = await Story.findAll(opt)
 
       if (!data) {
         throw {
