@@ -42,6 +42,30 @@ class ChatController {
       next(error)
     }
   }
+  static async readOne (req, res, next) {
+    try {
+      const {chatId} = req.params
+
+      let data = await Chat.findByPk(chatId, {
+        include: Message
+      })
+
+      if (!data) {
+        throw {
+          name: 'notFound',
+          message: 'Chat not found'
+        }
+      }
+
+      res.status(200).json({
+        message: 'Successfully fetched chat',
+        data
+      })
+    }
+    catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = ChatController

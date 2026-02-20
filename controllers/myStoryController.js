@@ -11,7 +11,7 @@ class MyStoryController {
         include: [
           {
             model: Tag,
-            attributes: ['tagName'],
+            attributes: ['id','tagName'],
             through: {
               attributes: []
             },
@@ -31,7 +31,7 @@ class MyStoryController {
         }
       }
 
-      const data = await Story.findAll()
+      const data = await Story.findAll(opt)
 
       if (!data) {
         throw {

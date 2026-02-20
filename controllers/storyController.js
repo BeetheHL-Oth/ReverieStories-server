@@ -6,14 +6,14 @@ class StoryController {
     try {
       let {tag, search} = req.query
       const page = parseInt(req.query.page) || 1;
-      const limit = 10
+      const limit = 5
       const offset = (page - 1) * limit
       let opt = {
         include: [
           User,
           {
             model: Tag,
-            attributes: ['tagName'],
+            attributes: ['id', 'tagName'],
             where: {},
             through: {
               attributes: []
@@ -24,7 +24,10 @@ class StoryController {
           where: {},
           limit,
           offset,
-          distinct: true
+          distinct: true,
+          order: [
+            ['votes', 'DESC']
+          ]
       }
       
       if (tag) {
@@ -54,6 +57,7 @@ class StoryController {
 
       let data = rows.map(e => {
         return {
+          id: e.id,
           title: e.title,
           author: e.User.username,
           chapters: e.Chapters.length,
@@ -96,7 +100,10 @@ class StoryController {
       }
 
       const chapters = data.Chapters.map(e => {
-        return e.name
+        return {
+          id: e.id,
+          name: e.name
+        }
       })
 
       data = {
@@ -105,7 +112,8 @@ class StoryController {
           Tags: data.Tags,
           description: data.description,
           chapters,
-          votes: data.votes
+          votes: data.votes,
+          storyImageUrl: data.storyImageUrl
         }
 
       res.status(200).json({
