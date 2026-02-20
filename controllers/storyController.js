@@ -48,13 +48,6 @@ class StoryController {
 
       let {count, rows} = await Story.findAndCountAll(opt)
 
-      if (!rows.length) {
-        throw {
-          name: 'notFound',
-          message: 'Data not found'
-        }
-      }
-
       let data = rows.map(e => {
         return {
           id: e.id,
