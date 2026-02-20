@@ -1,8 +1,8 @@
 const { OAuth2Client } = require('google-auth-library');
-const { comparePassword } = require('../helper/bcrypt');
+const { comparePassword, hashPassword } = require('../helper/bcrypt');
 const { signToken } = require('../helper/jwt');
 const {User} = require('../models')
-const OauthSetup = new OAuth2Client(process.env.GOOGLE_OAUTH_ID)
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 class AuthController {
   static async register (req, res, next) {
     try {
@@ -68,9 +68,47 @@ class AuthController {
       next(error)
     }
   }
-  static async googleOAuth (req, res, next) {
+  static async googleLogin (req, res, next) {
     try {
-      
+      const {access_token_google} = req.headers
+      if (!access_token_google) {
+        throw {
+          name: 'googleLoginError',
+          message: 'Access token from Google is required'
+        }
+      }
+      const ticket = await client.verifyIdToken({
+        idToken: access_token_google,
+        audience: process.env.GOOGLE_CLIENT_ID
+      });
+      const payload = ticket.getPayload();
+
+      if (!payload.email_verified) {
+        throw {
+          name: 'googleLoginError',
+          message: 'Email not verified by Google'
+        }
+      }
+
+      const [user, created] = await User.findOrCreate({
+        where: {
+          email: payload.email
+        },
+        defaults: {
+          username: payload.name,
+          password: hashPassword(Math.random().toString(36).slice(-8)),
+          role: 'user'
+        }
+      })
+
+      const access_token = signToken({
+        id: user.id,
+        email: user.email,
+        role: user.role
+      })
+      res.status(200).json({
+        access_token
+      })
     }
     catch (error) {
       next(error)

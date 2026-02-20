@@ -19,7 +19,7 @@ function errorHandler (error, req, res, next) {
       message = error.message
       break;
     case 'notFound':
-      code = 400
+      code = 404
       message = error.message
       break;
     case 'unauthorized':
@@ -35,6 +35,10 @@ function errorHandler (error, req, res, next) {
       message = error.message
       break;
     case 'alreadyAdded':
+      code = 400
+      message = error.message
+      break;
+    case 'googleLoginError':
       code = 400
       message = error.message
       break;
