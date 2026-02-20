@@ -36,6 +36,7 @@ class StoryController {
             [Op.iLike]: `%${tag}%`
           }
         }
+        opt.include[1].required = true
       }
 
       if (search) {
