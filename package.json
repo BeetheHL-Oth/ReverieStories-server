@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/BeetheHL-Oth/ReverieStories-server#readme",
   "dependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.36.0",
     "axios": "^1.13.5",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",

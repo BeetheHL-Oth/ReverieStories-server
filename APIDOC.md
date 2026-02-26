@@ -811,6 +811,38 @@ Create a new chat with an AI character and send the first message.
 
 ---
 
+### Text to Speech (TTS)
+Convert input text into speech audio using ElevenLabs.
+
+**Endpoint:** `POST /mycharacter/tts`
+
+**Authentication:** Required
+
+**Request Body:**
+```json
+{
+  "text": "Welcome back to Reverie Stories.",
+  "voiceId": "JBFqnCBsd6RMkjVDRZzb",
+  "modelId": "eleven_multilingual_v2"
+}
+```
+
+**Request Notes:**
+- `text` is required.
+- `voiceId` is optional. If omitted, server default voice is used.
+- `modelId` is optional. If omitted, server default model is used.
+
+**Response (200 OK):**
+- Content-Type: `audio/mpeg`
+- Binary MP3 stream in response body
+
+**Error Responses:**
+- `400 Bad Request` - Text missing/empty
+- `401 Unauthorized` - Authentication required
+- `502 Bad Gateway` - ElevenLabs request failed
+
+---
+
 ### Delete Chat
 Delete a chat and all its messages.
 
