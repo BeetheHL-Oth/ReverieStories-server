@@ -87,7 +87,11 @@ class AIController {
       })
     }
     catch (error) {
-      next(error)
+      console.error(" Error in chatWithCharacter:", error)
+      next({
+        name: 'invalidPrompt',
+        message: error.message || 'Failed to generate response'
+      })
     }
   }
 }

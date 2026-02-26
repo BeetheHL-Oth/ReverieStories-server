@@ -14,6 +14,10 @@ function errorHandler (error, req, res, next) {
       code = 400
       message = error.errors[0].message
       break;
+    case 'invalidPrompt':
+      code = 400
+      message = error.message
+      break;
     case 'LoginError':
       code = 401
       message = error.message
